@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${board.title}">Своя игра</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<main class="page-shell">
+    <section class="hero">
+        <p class="eyebrow">Spring Boot Web</p>
+        <h1 th:text="${board.title}">Своя игра</h1>
+        <p class="subtitle" th:text="${board.subtitle}">Каркас приложения</p>
+    </section>
+
+    <section class="scoreboard">
+        <article class="score-card" th:each="player : ${board.players}">
+            <span class="score-card__name" th:text="${player.name}">Игрок</span>
+            <strong class="score-card__value" th:text="|${player.score} очков|">0 очков</strong>
+        </article>
+    </section>
+
+    <section class="board">
+        <article class="category" th:each="category : ${board.categories}">
+            <header class="category__header">
+                <h2 th:text="${category.title}">Категория</h2>
+                <p th:text="${category.description}">Описание</p>
+            </header>
+
+            <div class="question-grid">
+                <a class="question-tile"
+                   th:each="question : ${category.questions}"
+                   th:href="@{/questions/{id}(id=${question.id})}"
+                   th:classappend="${question.status.name() == 'OPENED' or question.status.name() == 'ANSWERED'} ? ' question-tile--opened' : ''">
+                    <span th:text="${question.cost}">100</span>
+                </a>
+            </div>
+        </article>
+    </section>
+</main>
+</body>
+</html>
