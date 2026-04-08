@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Своя игра</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<main class="page-shell welcome-page">
+    <section class="welcome-hero">
+        <div class="welcome-hero__content">
+            <h1>Своя игра</h1>
+            <p class="subtitle welcome-hero__subtitle">
+                Подготовьте игроков, выберите состав и сразу переходите к первому раунду.
+            </p>
+        </div>
+
+        <section class="welcome-panel">
+            <p class="eyebrow">Настройка стола</p>
+            <h2>Игроки</h2>
+
+            <form class="welcome-form" th:action="@{/setup}" method="post">
+                <label class="welcome-label" for="playerCount">Количество игроков</label>
+                <select class="welcome-select" id="playerCount" name="playerCount">
+                    <option value="3" selected>3 игрока</option>
+                    <option value="4">4 игрока</option>
+                </select>
+
+                <div class="welcome-inputs">
+                    <label class="welcome-input-group">
+                        <span>Игрок 1</span>
+                        <input class="welcome-input" type="text" name="playerNames" placeholder="Например, Аня">
+                    </label>
+
+                    <label class="welcome-input-group">
+                        <span>Игрок 2</span>
+                        <input class="welcome-input" type="text" name="playerNames" placeholder="Например, Дима">
+                    </label>
+
+                    <label class="welcome-input-group">
+                        <span>Игрок 3</span>
+                        <input class="welcome-input" type="text" name="playerNames" placeholder="Например, Оля">
+                    </label>
+
+                    <label class="welcome-input-group" id="playerFourGroup">
+                        <span>Игрок 4</span>
+                        <input class="welcome-input" type="text" name="playerNames" placeholder="Например, Игорь">
+                    </label>
+                </div>
+
+                <button class="welcome-submit" type="submit">Начать игру</button>
+            </form>
+        </section>
+    </section>
+</main>
+
+<script>
+    const playerCountSelect = document.getElementById('playerCount');
+    const playerFourGroup = document.getElementById('playerFourGroup');
+
+    function syncPlayerFields() {
+        const showFourthPlayer = playerCountSelect.value === '4';
+        playerFourGroup.style.display = showFourthPlayer ? 'grid' : 'none';
+    }
+
+    syncPlayerFields();
+    playerCountSelect.addEventListener('change', syncPlayerFields);
+</script>
+</body>
+</html>

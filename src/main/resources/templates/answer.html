@@ -3,17 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="|Ответ за ${question.cost}|">Ответ</title>
+    <title>Ответ</title>
     <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body>
-<main class="page-shell page-shell--narrow answer-page-shell">
-    <section class="question-card answer-card">
+<main class="page-shell answer-page-shell">
+    <section class="answer-card">
+        <section class="answer-score-panel">
+            <p class="eyebrow">Начисление очков</p>
+            <div class="answer-score-list">
+                <article class="answer-score-item" th:each="player : ${board.players}">
+                    <div class="answer-score-item__info">
+                        <strong th:text="${player.name}">Игрок</strong>
+                        <span th:text="|${player.score} очков|">0 очков</span>
+                    </div>
+
+                    <div class="answer-score-item__actions">
+                        <form th:action="@{/questions/{id}/score(id=${question.id})}" method="post">
+                            <input type="hidden" name="playerId" th:value="${player.id}">
+                            <input type="hidden" name="action" value="add">
+                            <button class="score-action-button score-action-button--plus" type="submit"
+                                    th:text="${question.cost > 0} ? |+${question.cost}| : '+0'">+100</button>
+                        </form>
+
+                        <form th:action="@{/questions/{id}/score(id=${question.id})}" method="post">
+                            <input type="hidden" name="playerId" th:value="${player.id}">
+                            <input type="hidden" name="action" value="subtract">
+                            <button class="score-action-button score-action-button--minus" type="submit"
+                                    th:text="${question.cost > 0} ? |-${question.cost}| : '-0'">-100</button>
+                        </form>
+                    </div>
+                </article>
+            </div>
+        </section>
+
         <div class="answer-card__content">
             <p class="answer-text" th:text="${question.answer}">Текст ответа</p>
         </div>
 
-        <a class="answer-back-button" th:href="@{/}">К игровому полю</a>
+        <a class="answer-back-button" th:href="${finalRoundActive} ? @{/results} : @{/}">
+            <span th:text="${finalRoundActive} ? 'К итоговым результатам' : 'К игровому полю'">К игровому полю</span>
+        </a>
     </section>
 </main>
 </body>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Финальный раунд</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<main class="page-shell page-shell--board final-round-page">
+    <section class="question-card final-round-card">
+        <p class="eyebrow">Финальный раунд</p>
+        <h1 th:text="${board.title}">Своя игра</h1>
+        <p class="subtitle">Осталось тем: <strong th:text="${remainingCategories}">7</strong></p>
+        <p class="final-round-turn" th:if="${remainingCategories > 1}">
+            Сейчас тему убирает: <strong th:text="${currentPlayer.name}">Игрок 1</strong>
+        </p>
+        <p class="final-round-turn" th:if="${remainingCategories == 1}">
+            Осталась одна тема. Нажмите «Выбрать тему», чтобы открыть финальный вопрос.
+        </p>
+    </section>
+
+    <section class="final-round-grid">
+        <article class="final-topic-card" th:each="category : ${activeCategories}">
+            <div>
+                <p class="eyebrow">Тема</p>
+                <h2 th:text="${category.title}">Название темы</h2>
+                <p class="subtitle" th:text="${category.description}">Описание темы</p>
+            </div>
+
+            <div class="final-topic-actions">
+                <a class="final-topic-button final-topic-button--remove"
+                   th:if="${remainingCategories > 1}"
+                   th:href="@{/final/categories/{id}/remove(id=${category.id})}">
+                    Убрать тему
+                </a>
+                <span class="final-topic-button final-topic-button--disabled"
+                      th:if="${remainingCategories == 1}">
+                    Убрать тему
+                </span>
+
+                <a class="final-topic-button final-topic-button--select"
+                   th:if="${remainingCategories == 1}"
+                   th:href="@{/final/categories/{id}/question(id=${category.id})}">
+                    Выбрать тему
+                </a>
+                <span class="final-topic-button final-topic-button--disabled"
+                      th:if="${remainingCategories > 1}">
+                    Выбрать тему
+                </span>
+            </div>
+        </article>
+    </section>
+
+    <section class="final-removed-topics" th:if="${!removedCategories.isEmpty()}">
+        <p class="eyebrow">Убраны</p>
+        <div class="final-removed-list">
+            <span class="final-removed-item" th:each="category : ${removedCategories}" th:text="${category.title}">Тема</span>
+        </div>
+    </section>
+</main>
+</body>
+</html>

@@ -27,4 +27,8 @@ public class Player {
     public void addScore(int points) {
         this.score += points;
     }
+
+    public void subtractScore(int points) {
+        this.score -= points;
+    }
 }

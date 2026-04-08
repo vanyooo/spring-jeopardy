@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Раунд 1 закончен</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<main class="page-shell page-shell--narrow round-summary-page">
+    <section class="question-card round-summary-card">
+        <p class="eyebrow">Переход между раундами</p>
+        <h1>Раунд 1 закончен</h1>
+
+        <section class="round-scores">
+            <h2>Очки игроков</h2>
+
+            <div class="round-scores__list">
+                <article class="round-score-item" th:each="player : ${players}">
+                    <span th:text="${player.name}">Игрок</span>
+                    <strong th:text="|${player.score} очков|">0 очков</strong>
+                </article>
+            </div>
+        </section>
+
+        <a class="round-next-button" th:href="@{/rounds/2/start}">Начать второй раунд</a>
+    </section>
+</main>
+</body>
+</html>

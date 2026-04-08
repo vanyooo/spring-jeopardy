@@ -7,28 +7,42 @@
     <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body>
-<main class="page-shell">
-    <section class="hero">
-        <p class="eyebrow">Spring Boot Web</p>
-        <h1 th:text="${board.title}">Своя игра</h1>
-        <p class="subtitle" th:text="${board.subtitle}">Каркас приложения</p>
+<main class="page-shell page-shell--board">
+    <section class="hero hero--compact">
+        <div class="board-header">
+            <div>
+                <p class="eyebrow">Своя игра</p>
+                <p class="board-round-title" th:text="${board.subtitle}">Раунд 1</p>
+            </div>
+
+            <a class="round-switch-button"
+               th:if="${firstRoundActive}"
+               th:href="@{/rounds/2/start}">
+                Перейти ко второму раунду
+            </a>
+
+            <a class="round-switch-button"
+               th:if="${secondRoundActive}"
+               th:href="@{/rounds/final/start}">
+                Перейти в финальный раунд
+            </a>
+        </div>
     </section>
 
-    <section class="scoreboard">
+    <section class="scoreboard scoreboard--compact">
         <article class="score-card" th:each="player : ${board.players}">
             <span class="score-card__name" th:text="${player.name}">Игрок</span>
             <strong class="score-card__value" th:text="|${player.score} очков|">0 очков</strong>
         </article>
     </section>
 
-    <section class="board">
-        <article class="category" th:each="category : ${board.categories}">
-            <header class="category__header">
+    <section class="board-table">
+        <article class="board-row" th:each="category : ${board.categories}">
+            <div class="board-topic">
                 <h2 th:text="${category.title}">Категория</h2>
-                <p th:text="${category.description}">Описание</p>
-            </header>
+            </div>
 
-            <div class="question-grid">
+            <div class="board-questions">
                 <a class="question-tile"
                    th:each="question : ${category.questions}"
                    th:href="@{/questions/{id}(id=${question.id})}"

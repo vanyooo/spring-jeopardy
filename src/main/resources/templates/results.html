@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Итоговые результаты</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<main class="page-shell page-shell--narrow results-page">
+    <section class="question-card results-card">
+        <p class="eyebrow">Игра окончена</p>
+        <h1>Итоговые результаты</h1>
+
+        <div class="results-list">
+            <article class="results-item" th:each="result : ${results}">
+                <div class="results-item__position" th:text="|${result.position} место|">1 место</div>
+                <div class="results-item__player" th:text="${result.playerName}">Игрок 1</div>
+                <div class="results-item__score" th:text="|${result.score} очков|">0 очков</div>
+            </article>
+        </div>
+    </section>
+</main>
+</body>
+</html>

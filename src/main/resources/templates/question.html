@@ -3,20 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="|${question.cost} ${board.title}|">Вопрос</title>
+    <title th:text="|${board.subtitle} ${board.title}|">Вопрос</title>
     <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body>
-<main class="page-shell page-shell--narrow">
-    <a class="back-link" th:href="@{/}">← К игровому полю</a>
+<main class="page-shell page-shell--narrow question-page-shell">
+    <a class="back-link" th:href="${finalRoundActive} ? @{/final} : @{/}">К игровому полю</a>
 
-    <section class="question-card">
-        <p class="eyebrow">Вопрос за <span th:text="${question.cost}">100</span></p>
-        <h1 th:text="${question.question}">Текст вопроса</h1>
-        <div class="answer-action-panel">
-            <a class="action-button" th:href="@{/questions/{id}/answer(id=${question.id})}">Показать ответ</a>
-        </div>
-    </section>
+    <div class="question-page-content">
+        <section class="question-card question-card--plain">
+            <p class="eyebrow" th:if="${!finalRoundActive}" th:text="|Вопрос за ${question.cost}|">Вопрос</p>
+            <h1 th:text="${question.question}">Текст вопроса</h1>
+            <div class="answer-action-panel">
+                <a class="action-button" th:href="@{/questions/{id}/answer(id=${question.id})}">Показать ответ</a>
+            </div>
+        </section>
+    </div>
 </main>
 </body>
 </html>
