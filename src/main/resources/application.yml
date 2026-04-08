@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: spring-jeopardy
+  thymeleaf:
+    cache: false
+
+server:
+  port: 8080
