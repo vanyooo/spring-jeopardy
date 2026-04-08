@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="|Ответ за ${question.cost}|">Ответ</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<main class="page-shell page-shell--narrow answer-page-shell">
+    <section class="question-card answer-card">
+        <div class="answer-card__content">
+            <p class="answer-text" th:text="${question.answer}">Текст ответа</p>
+        </div>
+
+        <a class="answer-back-button" th:href="@{/}">К игровому полю</a>
+    </section>
+</main>
+</body>
+</html>

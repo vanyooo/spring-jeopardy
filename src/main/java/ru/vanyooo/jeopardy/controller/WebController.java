@@ -31,4 +31,16 @@ public class WebController {
         model.addAttribute("board", gameService.getBoard());
         return "question";
     }
+
+    @GetMapping("/questions/{id}/answer")
+    public String answer(@PathVariable Long id, Model model) {
+        var question = gameService.findQuestionById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Question not found: " + id));
+
+        // После перехода на страницу ответа считаем вопрос отвеченным.
+        gameService.answerQuestion(id);
+        model.addAttribute("question", question);
+        model.addAttribute("board", gameService.getBoard());
+        return "answer";
+    }
 }

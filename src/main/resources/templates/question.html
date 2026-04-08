@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="|${question.cost} | ${board.title}|">Вопрос</title>
+    <title th:text="|${question.cost} ${board.title}|">Вопрос</title>
     <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body>
@@ -13,12 +13,9 @@
     <section class="question-card">
         <p class="eyebrow">Вопрос за <span th:text="${question.cost}">100</span></p>
         <h1 th:text="${question.question}">Текст вопроса</h1>
-        <p class="hint" th:text="|Подсказка: ${question.hint}|">Подсказка</p>
-
-        <details class="answer-box">
-            <summary>Показать ответ</summary>
-            <p th:text="${question.answer}">Ответ</p>
-        </details>
+        <div class="answer-action-panel">
+            <a class="action-button" th:href="@{/questions/{id}/answer(id=${question.id})}">Показать ответ</a>
+        </div>
     </section>
 </main>
 </body>

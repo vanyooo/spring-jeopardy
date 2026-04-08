@@ -34,6 +34,10 @@ public class GameService {
         findQuestionById(questionId).ifPresent(question -> question.setStatus(QuestionStatus.OPENED));
     }
 
+    public void answerQuestion(Long questionId) {
+        findQuestionById(questionId).ifPresent(question -> question.setStatus(QuestionStatus.ANSWERED));
+    }
+
     private GameBoard createDemoBoard() {
         List<Category> categories = List.of(
                 new Category(
