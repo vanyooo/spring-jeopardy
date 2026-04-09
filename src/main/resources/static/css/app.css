@@ -349,6 +349,89 @@ a {
     justify-content: center;
 }
 
+.final-wager-panel {
+    margin-bottom: 28px;
+    padding: 20px;
+    border-radius: 24px;
+    background: rgba(8, 17, 32, 0.52);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.final-wager-form {
+    display: grid;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.final-wager-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.final-wager-item__info {
+    display: grid;
+    gap: 4px;
+}
+
+.final-wager-item__info span {
+    color: var(--muted);
+    font-size: 0.92rem;
+}
+
+.final-wager-input {
+    width: 160px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    background: rgba(8, 17, 32, 0.6);
+    color: var(--text);
+    padding: 12px 14px;
+    font: inherit;
+}
+
+.final-wager-save {
+    border: 0;
+    border-radius: 16px;
+    padding: 14px 18px;
+    background: linear-gradient(180deg, #ffb703 0%, #f59f00 100%);
+    color: #081120;
+    font: inherit;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.final-wager-save:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+}
+
+.question-image-panel {
+    margin-top: 24px;
+    padding: 18px;
+    border-radius: 24px;
+    background: rgba(8, 17, 32, 0.52);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.question-image {
+    display: block;
+    width: 100%;
+    max-width: 680px;
+    max-height: 50vh;
+    margin: 0 auto;
+    object-fit: contain;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
 .answer-action-panel {
     margin-top: 32px;
     padding: 28px;
@@ -838,6 +921,15 @@ a {
 
     .question-card {
         padding: 24px;
+    }
+
+    .final-wager-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .final-wager-input {
+        width: 100%;
     }
 
     .final-topic-card {

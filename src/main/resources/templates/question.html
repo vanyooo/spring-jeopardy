@@ -12,10 +12,43 @@
 
     <div class="question-page-content">
         <section class="question-card question-card--plain">
-            <p class="eyebrow" th:if="${!finalRoundActive}" th:text="|Вопрос за ${question.cost}|">Вопрос</p>
-            <h1 th:text="${question.question}">Текст вопроса</h1>
-            <div class="answer-action-panel">
-                <a class="action-button" th:href="@{/questions/{id}/answer(id=${question.id})}">Показать ответ</a>
+            <div class="final-wager-panel" th:if="${finalRoundActive and !finalWagersSaved}">
+                <p class="eyebrow">Финальный вопрос</p>
+                <h1>Сначала укажите ставки игроков</h1>
+                <p class="subtitle">После сохранения ставок откроется сам вопрос.</p>
+
+                <form class="final-wager-form" th:action="@{/questions/{id}/wagers(id=${question.id})}" method="post">
+                    <article class="final-wager-item" th:each="player : ${board.players}">
+                        <div class="final-wager-item__info">
+                            <strong th:text="${player.name}">Игрок</strong>
+                            <span th:text="|Максимум: ${player.score > 0 ? player.score : 0} очков|">Максимум: 0 очков</span>
+                        </div>
+
+                        <input class="final-wager-input"
+                               type="number"
+                               name="wagers"
+                               min="0"
+                               step="1"
+                               th:max="${player.score > 0 ? player.score : 0}"
+                               th:value="${@gameService.getPlayerFinalWager(player.id)}">
+                    </article>
+
+                    <button class="final-wager-save" type="submit">Сохранить ставки и открыть вопрос</button>
+                </form>
+            </div>
+
+            <div th:if="${!finalRoundActive or finalWagersSaved}">
+                <p class="eyebrow" th:if="${!finalRoundActive}" th:text="|Вопрос за ${question.cost}|">Вопрос</p>
+                <p class="eyebrow" th:if="${finalRoundActive and finalWagersSaved}">Финальный вопрос</p>
+                <h1 th:text="${question.question}">Текст вопроса</h1>
+
+                <div class="question-image-panel" th:if="${question.imageUrl != null and !#strings.isEmpty(question.imageUrl)}">
+                    <img class="question-image" th:src="${question.imageUrl}" alt="Иллюстрация к вопросу">
+                </div>
+
+                <div class="answer-action-panel">
+                    <a class="action-button" th:href="@{/questions/{id}/answer(id=${question.id})}">Показать ответ</a>
+                </div>
             </div>
         </section>
     </div>

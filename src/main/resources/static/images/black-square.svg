@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+    <title id="title">Черный квадрат</title>
+    <desc id="desc">Упрощенная иллюстрация с черным квадратом на светлом фоне.</desc>
+
+    <rect width="1200" height="900" fill="#efe6d1"/>
+    <rect x="250" y="100" width="700" height="700" rx="18" fill="#111111"/>
+</svg>

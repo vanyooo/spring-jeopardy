@@ -55,7 +55,23 @@ public class WebController {
         model.addAttribute("question", question);
         model.addAttribute("board", gameService.getBoard());
         model.addAttribute("finalRoundActive", gameService.isFinalRoundActive());
+        model.addAttribute("finalWagersSaved", gameService.areFinalWagersSaved());
         return "question";
+    }
+
+    @PostMapping("/questions/{id}/wagers")
+    public String saveFinalWagers(@PathVariable Long id,
+                                  @RequestParam(name = "wagers", required = false) List<Integer> wagers) {
+        if (!gameService.isGameConfigured()) {
+            return "redirect:/";
+        }
+
+        if (!gameService.isFinalRoundActive()) {
+            return "redirect:/questions/" + id;
+        }
+
+        gameService.saveFinalWagers(wagers == null ? List.of() : wagers);
+        return "redirect:/questions/" + id;
     }
 
     @GetMapping("/questions/{id}/answer")
@@ -86,7 +102,7 @@ public class WebController {
         var question = gameService.findQuestionById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Question not found: " + id));
 
-        int points = question.getCost();
+        int points = gameService.getQuestionPointsForPlayer(id, playerId);
         if ("add".equals(action)) {
             gameService.addScoreToPlayer(playerId, points);
         } else if ("subtract".equals(action)) {

@@ -23,14 +23,14 @@
                             <input type="hidden" name="playerId" th:value="${player.id}">
                             <input type="hidden" name="action" value="add">
                             <button class="score-action-button score-action-button--plus" type="submit"
-                                    th:text="${question.cost > 0} ? |+${question.cost}| : '+0'">+100</button>
+                                    th:text="|+${@gameService.getQuestionPointsForPlayer(question.id, player.id)}|">+100</button>
                         </form>
 
                         <form th:action="@{/questions/{id}/score(id=${question.id})}" method="post">
                             <input type="hidden" name="playerId" th:value="${player.id}">
                             <input type="hidden" name="action" value="subtract">
                             <button class="score-action-button score-action-button--minus" type="submit"
-                                    th:text="${question.cost > 0} ? |-${question.cost}| : '-0'">-100</button>
+                                    th:text="|-${@gameService.getQuestionPointsForPlayer(question.id, player.id)}|">-100</button>
                         </form>
                     </div>
                 </article>

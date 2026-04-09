@@ -53,6 +53,14 @@ class JeopardyApplicationTests {
     }
 
     @Test
+    void questionCanContainImage() {
+        var question = gameService.findQuestionById(604L);
+
+        assertThat(question).isPresent();
+        assertThat(question.get().getImageUrl()).isEqualTo("/images/black-square.svg");
+    }
+
+    @Test
     void secondRoundCanBeStartedBeforeAllQuestionsAreAnswered() {
         gameService.startSecondRound();
 
@@ -73,12 +81,12 @@ class JeopardyApplicationTests {
 
         assertThat(gameService.isFinalRoundActive()).isTrue();
         assertThat(board.getSubtitle()).isEqualTo("Финальный раунд");
-        assertThat(board.getCategories()).hasSize(7);
-        assertThat(gameService.getActiveFinalCategories()).hasSize(7);
+        assertThat(board.getCategories()).hasSize(9);
+        assertThat(gameService.getActiveFinalCategories()).hasSize(9);
     }
 
     @Test
-    void finalRoundLeavesOnlyOneThemeAfterSixRemovals() {
+    void finalRoundLeavesOnlyOneThemeAfterEightRemovals() {
         gameService.startSecondRound();
         gameService.startFinalRound();
 
@@ -88,10 +96,12 @@ class JeopardyApplicationTests {
         gameService.removeFinalCategory(24L);
         gameService.removeFinalCategory(25L);
         gameService.removeFinalCategory(26L);
+        gameService.removeFinalCategory(27L);
+        gameService.removeFinalCategory(28L);
 
         assertThat(gameService.getActiveFinalCategories()).hasSize(1);
-        assertThat(gameService.canSelectFinalCategory(27L)).isTrue();
-        assertThat(gameService.canRemoveFinalCategory(27L)).isFalse();
+        assertThat(gameService.canSelectFinalCategory(29L)).isTrue();
+        assertThat(gameService.canRemoveFinalCategory(29L)).isFalse();
     }
 
     @Test
@@ -105,11 +115,27 @@ class JeopardyApplicationTests {
         gameService.removeFinalCategory(24L);
         gameService.removeFinalCategory(25L);
         gameService.removeFinalCategory(26L);
+        gameService.removeFinalCategory(27L);
+        gameService.removeFinalCategory(28L);
 
-        gameService.answerQuestion(2701L);
+        gameService.answerQuestion(2901L);
 
         assertThat(gameService.isFinalRoundCompleted()).isTrue();
         assertThat(gameService.getFinalResults()).hasSize(3);
         assertThat(gameService.getFinalResults().get(0).getPosition()).isEqualTo(1);
+    }
+
+    @Test
+    void finalWagerCannotExceedPlayerScore() {
+        gameService.addScoreToPlayer(1L, 300);
+        gameService.addScoreToPlayer(2L, 150);
+        gameService.startSecondRound();
+        gameService.startFinalRound();
+
+        gameService.saveFinalWagers(java.util.List.of(500, 100, 50));
+
+        assertThat(gameService.getPlayerFinalWager(1L)).isEqualTo(300);
+        assertThat(gameService.getPlayerFinalWager(2L)).isEqualTo(100);
+        assertThat(gameService.getPlayerFinalWager(3L)).isEqualTo(0);
     }
 }
